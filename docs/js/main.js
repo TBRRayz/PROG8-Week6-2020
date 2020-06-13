@@ -29,9 +29,11 @@ class Main {
         for (let i = 0; i < 10; i++) {
             this.ships.push(new PirateShip());
         }
+        this.messageBoard = new MessageBoard();
         this.gameLoop();
     }
     gameLoop() {
+        this.messageBoard.update();
         for (const ship of this.ships) {
             ship.update();
             for (const otherShip of this.ships) {
@@ -50,6 +52,21 @@ class Main {
     }
 }
 window.addEventListener("load", () => new Main());
+class MessageBoard extends HTMLElement {
+    constructor() {
+        super();
+        this.x = 0;
+        this.y = 0;
+        let game = document.getElementsByTagName("game")[0];
+        game.appendChild(this);
+    }
+    update() {
+        this.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
+    }
+    draw() {
+    }
+}
+window.customElements.define("messageboard-component", MessageBoard);
 class Ship extends HTMLElement {
     constructor() {
         super();
