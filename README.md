@@ -15,5 +15,6 @@ Toevoegen van het Singleton Pattern zodat alle piratenschepen en kapiteinen makk
 
 ## Opdracht
 - Teken het klassendiagram waarbij je er rekening mee houdt dat het `Messageboard` een *Singleton* is.
+![alt text](captain-uml.jpeg "UML")
 - Maak het `Messageboard` in code en pas het *Singleton Pattern* toe.
 - Plaats de berichten op het `Messageboard` zoals hierboven beschreven.
