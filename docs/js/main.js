@@ -14,11 +14,15 @@ class Captain extends HTMLElement {
     onCollision(numberOfHits) {
         if (numberOfHits == 1) {
             this.style.backgroundImage = `url(images/emote_alert.png)`;
-            console.log(`Captain of ${this.ship.color} pirateship WOKE UP!`);
+            let message = document.createElement('message');
+            message.append(`Captain of ${this.ship.color} pirateship WOKE UP!`);
+            MessageBoard.instance().appendChild(message);
         }
         else if (numberOfHits == 7) {
             this.style.backgroundImage = `url(images/emote_faceAngry.png)`;
-            console.log(`Captain of ${this.ship.color} pirateship got ANGRY!`);
+            let message = document.createElement('message');
+            message.append(`Captain of ${this.ship.color} pirateship got ANGRY!`);
+            MessageBoard.instance().appendChild(message);
         }
     }
 }
@@ -34,6 +38,10 @@ class Main {
     }
     gameLoop() {
         this.messageBoard.update();
+        let messages = document.getElementsByTagName('message');
+        if (messages.length > 12) {
+            messages[0].parentNode.removeChild(messages[0]);
+        }
         for (const ship of this.ships) {
             ship.update();
             for (const otherShip of this.ships) {
@@ -59,6 +67,11 @@ class MessageBoard extends HTMLElement {
         this.y = 0;
         let game = document.getElementsByTagName("game")[0];
         game.appendChild(this);
+    }
+    static instance() {
+        if (!MessageBoard._instance)
+            MessageBoard._instance = new MessageBoard();
+        return MessageBoard._instance;
     }
     update() {
         this.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
@@ -149,7 +162,9 @@ class PirateShip extends Ship {
         if (this._hit && !this.previousHit) {
             this.captain.onCollision(++this.numberOfHits);
             let times = this.numberOfHits == 1 ? "time" : "times";
-            console.log(`${this.color} pirateship got hit ${this.numberOfHits} ${times}!`);
+            let message = document.createElement('message');
+            message.append(`${this.color} pirateship got hit ${this.numberOfHits} ${times}!`);
+            MessageBoard.instance().appendChild(message);
         }
         this.previousHit = this._hit;
     }

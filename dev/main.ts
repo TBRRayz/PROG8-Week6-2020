@@ -17,6 +17,11 @@ class Main {
     gameLoop() {
         
         this.messageBoard.update()
+        
+        let messages = document.getElementsByTagName('message');
+        if (messages.length > 12) {
+            messages[0].parentNode.removeChild(messages[0]);
+        }
 
         for (const ship of this.ships) {
             ship.update()
